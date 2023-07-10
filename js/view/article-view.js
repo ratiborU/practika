@@ -1,26 +1,34 @@
 import { createElement } from '../render.js';
 
+const createAnswersTeamplate = (answers) => {
+  let result = '';
+  for (let answer of answers) {
+    result += `
+    <div class="article__text">
+      ${answer.answer}
+    </div>`
+  }
+  return result;
+};
 
-const createTemplate = (article) => (
-    `<li class="main__article article">
-      <div class="article__name">
-        <p class="aticle__name-text">${article.title}</p>
-      </div>
-      <div class="article__text">
-        ${article.text}
-      </div>
-      <div class="article__date">${article.date}</div>
-    </li>`
-  );
+const createTemplate = (question) => (
+ `<li class="main__article article">
+    <div class="article__name">
+      <p class="aticle__name-text">${question.question}</p>
+    </div>
+    ${createAnswersTeamplate(question.answers)}
+    <div class="article__date">${question.date_created}</div>
+  </li>`
+);
 
 
 export default class ArticleView {
-  constructor(article) {
-    this.article = article
+  constructor(question) {
+    this.question = question;
   }
 
   getTemplate () {
-    return createTemplate(this.article);
+    return createTemplate(this.question);
   }
 
   getElement() {

@@ -19,6 +19,10 @@ export default class ArticlesListView {
     return this.element;
   }
 
+  removeArticles() {
+    this.getElement().innerHTML = '';
+  }
+
   removeElement() {
     this.element = null;
   }

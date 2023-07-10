@@ -20,26 +20,31 @@ export default class BoardPresenter {
     this.mainWrapper = document.querySelector('.main__wrapper');
   }
 
-  init (articlesModel, themesModel) {
-    this.articlesModel = articlesModel;
+  init (themesModel) {
+    // this.articlesModel = articlesModel;
     this.themesModel = themesModel;
-    this.articles = [...this.articlesModel.getArticles()];
-    this.themes = [...this.themesModel.getThemes()];
+    // this.articles = [...this.articlesModel.getArticles()];
+    this.themes = this.themesModel.getThemesList();
 
 
     render(this.mainContainer, this.mainWrapper)
     render(this.themesList, this.mainContainer.getElement());
+
     let i = 0;
     for (const theme of this.themes) {
-      const themeView = new ThemeView(theme);
+      const themeView = new ThemeView(theme, i++);
       render(themeView, this.themesList.getElement());
-      themeView.setListener(themeView.setTheme(i++));
-    }
-    render(this.articlesList, this.mainContainer.getElement());
-    for (const article of this.articles) {
-      render(new ArticleView(article), this.articlesList.getElement());
+      // themeView.setListener(themeView.setTheme(i++));
+      themeView.setListener(this.switchTheme(i));
+      
     }
 
+    render(this.articlesList, this.mainContainer.getElement());
+    // for (const article of this.articles) {
+    //   render(new ArticleView(article), this.articlesList.getElement());
+    // }
+    // this.articlesList.removeArticles();
+    this.switchTheme(1)();
     this.login.init(this.switchToSignUpPage);
     this.signUp.init(this.switchToLoginPage);
   }
@@ -60,14 +65,25 @@ export default class BoardPresenter {
     }
   }
 
+
   switchToLoginPage = () => {
     this.mainWrapper.innerHTML = '';
     render(this.login, this.mainWrapper);
   }
-
   switchToSignUpPage = () => {
     this.mainWrapper.innerHTML = '';
     render(this.signUp, this.mainWrapper);
   }
 
+  
+  switchTheme = (themeId) => {
+    return () => {
+      this.articlesList.removeArticles();
+      const theme = this.themes.filter(x => x.id == themeId)[0];
+      console.log(theme);
+      for (const question of theme.questions) {
+        render(new ArticleView(question), this.articlesList.getElement());
+      }
+    }
+  }
 }

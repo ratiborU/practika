@@ -16,6 +16,10 @@ const createTemplate = () => (
 
 
 export default class MenuView {
+  init(callback) {
+    this.setListeners(callback);
+  }
+
   getTemplate() {
     return createTemplate;
   }

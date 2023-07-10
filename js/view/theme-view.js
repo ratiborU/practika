@@ -1,19 +1,20 @@
 import {createElement} from '../render.js';
 
-const createTemplate = (themeName) => (
+const createTemplate = (theme) => (
   `<li class="main__themes-item">
-    <a class="main__themes-item-link" href="#">${themeName}</a>
+    <a class="main__themes-item-link" href="#">${theme.title}</a>
   </li>`
 );
 
 
 export default class ThemeView {
-  constructor(themeName) {
-    this.themeName = themeName
+  constructor(theme, themeNumber) {
+    this.theme = theme;
+    this.getElement().addEventListener('click', this.setTheme(themeNumber));
   }
 
   getTemplate() {
-    return createTemplate(this.themeName);
+    return createTemplate(this.theme);
   }
 
   getElement() {
