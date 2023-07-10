@@ -1,8 +1,4 @@
 export default class ThemeModel {
-  constructor() {
-    this.themes = [];
-  }
-
   init(themes, questions, answers) {
     this.themes = themes;
     this.questions = questions;
@@ -10,7 +6,7 @@ export default class ThemeModel {
     console.log(this.getThemesList());
   }
 
-  getThemesList() { // переделать получше
+  getThemesList() { // переделать получше, выглядит ужасно, но работает.....
     let result = [];
     for (let theme of this.themes) {
       result.push({

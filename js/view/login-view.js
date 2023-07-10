@@ -25,18 +25,48 @@ const createTemplate = () => (
 export default class LoginView {
   init(callback) {
     this.getElement().querySelector('.login__hint-link').addEventListener('click', callback);
+    // Код Алексея
+    this.element.querySelector('.login__button').addEventListener('click', this.onLoginButton);
   }
+
 
   getTemplate() {
     return createTemplate();
   }
 
+
   getElement() {
     if (!this.element){
       this.element = createElement(this.getTemplate());
     }
-
     return this.element;
+  }
+
+  // обработчик на кнопке Код Алексея
+  onLoginButton(event) {
+    event.preventDefault(); 
+
+    var email = document.querySelector('.login__email-input').value;
+    var password = document.querySelector('.login__password-input').value;
+
+    // Создаем объект FormData и добавляем в него значения полей ввода
+    var formData = new FormData();
+    formData.append('username', email);
+    formData.append('password', password);
+
+    // Создаем объект запроса
+    var request = new XMLHttpRequest();
+    request.open('POST', '/auth/jwt/login'); // возможно нужно изменить путь
+    request.send(formData);
+
+    // Обработка ответа сервера (вы можете настроить свою логику обработки здесь)
+    request.onload = function() {
+      if (request.status === 204) {
+        alert("Успешный вход")
+      } else {
+        alert("Неудачный вход, попробуйте ещё раз")
+      }
+    };
   }
 
   removeElement() {

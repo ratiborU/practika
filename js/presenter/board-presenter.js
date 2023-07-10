@@ -44,7 +44,8 @@ export default class BoardPresenter {
     //   render(new ArticleView(article), this.articlesList.getElement());
     // }
     // this.articlesList.removeArticles();
-    this.switchTheme(1)();
+    // this.switchTheme(1)();
+    this.loadArticle.init();
     this.login.init(this.switchToSignUpPage);
     this.signUp.init(this.switchToLoginPage);
   }
@@ -80,7 +81,6 @@ export default class BoardPresenter {
     return () => {
       this.articlesList.removeArticles();
       const theme = this.themes.filter(x => x.id == themeId)[0];
-      console.log(theme);
       for (const question of theme.questions) {
         render(new ArticleView(question), this.articlesList.getElement());
       }

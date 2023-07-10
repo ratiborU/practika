@@ -17,6 +17,10 @@ const createTemplate = () => (
 
 
 export default class LoadArticleView {
+  init() {
+    this.getElement().querySelector('.main__load-article-button').addEventListener('click', this.onLoadArticleButton);
+  }
+
   getTemplate () {
     return createTemplate();
   }
@@ -27,6 +31,16 @@ export default class LoadArticleView {
     }
 
     return this.element;
+  }
+
+  // обработчик на кнопку загрузки
+  onLoadArticleButton(event) {
+    event.preventDefault();
+
+    var question = document.querySelector('.load-article__name-input').value;
+    var answer = document.querySelector('.load-article__textarea').value;
+
+    // как дальше писать запрос я не знаю
   }
 
   removeElement() {

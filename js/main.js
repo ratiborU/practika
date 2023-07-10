@@ -2,10 +2,7 @@ import MenuView from './view/menu-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import ThemeModel from './model/theme-model.js';
 
-import { getThemes } from './mock/themes.js';
-import { getQuestions } from './mock/question.js';
-import { getAnswers } from './mock/answer.js';
-
+import { getAnswers, getQuestions, getThemes } from './mock/themes.js';
 import { render } from './render.js';
 
 
