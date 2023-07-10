@@ -28,6 +28,25 @@ export default class MenuView {
     return this.element;
   }
 
+  setMenu(menuNumber, callback) {
+    return () => {
+      const menuElements = document.querySelectorAll('.header__menu-item');
+      for (const menuElement of menuElements) {
+        menuElement.classList.remove('header__menu-item-active');
+      }
+      menuElements[menuNumber].classList.add('header__menu-item-active');
+      callback(menuNumber);
+    };
+  }
+
+  setListeners(callback) {
+    const menuElements = document.querySelectorAll('.header__menu-item');
+    let i = 0;
+    for (const menuElement of menuElements) {
+      menuElement.addEventListener('click', this.setMenu(i++, callback));
+    }
+  }
+
   removeElement() {
     this.element = null;
   }

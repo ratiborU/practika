@@ -1,8 +1,7 @@
 import { createElement } from '../render.js';
 
 
-const createTemplate = (article) => {
-  return (
+const createTemplate = (article) => (
     `<li class="main__article article">
       <div class="article__name">
         <p class="aticle__name-text">${article.title}</p>
@@ -13,7 +12,6 @@ const createTemplate = (article) => {
       <div class="article__date">${article.date}</div>
     </li>`
   );
-};
 
 
 export default class ArticleView {

@@ -24,6 +24,20 @@ export default class ThemeView {
     return this.element;
   }
 
+  setListener(callBack) {
+    this.element.addEventListener('click', callBack) // не очень хорошо
+  }
+
+  setTheme(themeNumber) {
+    return () => {
+      const themeElements = document.querySelectorAll('.main__themes-item');
+      for (const themeElement of themeElements) {
+        themeElement.classList.remove('main__themes-item-active');
+      }
+      themeElements[themeNumber].classList.add('main__themes-item-active');
+    };
+  }
+
   removeElement() {
     this.element = null;
   }
