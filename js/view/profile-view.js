@@ -24,11 +24,12 @@ const createTemplate = (profile) => (
 
 
 export default class ArticleView {
-  constructor(profile) {
-    this.profile = profile
+  init() {
+    
   }
 
   getTemplate () {
+    this.profile = this.getProfileDate;
     return createTemplate(this.profile);
   }
 
@@ -38,6 +39,20 @@ export default class ArticleView {
     }
 
     return this.element;
+  }
+
+  // запрос на проверку авторизации пользователя
+  getAuthorizationCode = () => {
+    return 200;
+  }
+
+  // получение данных пользователя
+  getProfileDate = () => {
+    return {
+      firstName: "Иван",
+      secondName: "Иванов",
+      email: "ivan.ivanov@gmail.com"
+    }
   }
 
   removeElement() {

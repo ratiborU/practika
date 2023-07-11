@@ -248,7 +248,7 @@ const questions = [
 const topics = [
   {
     id: 1,
-    title: 'Образование1'
+    title: 'Образование1 Образование1'
   },
   {
     id: 2,
@@ -268,6 +268,12 @@ const topics = [
   }
 ];
 
+
+const getNormalDate = (date) => {
+  return date.split('T')[0].split('-').reverse().join('.');
+}
+console.log(getNormalDate("2023-07-09T16:00:40.557000"))
+// 09.07.2023
 
 const getAnswers = () => answers;
 const getQuestions = () => questions;
