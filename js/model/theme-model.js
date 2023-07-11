@@ -2,14 +2,14 @@ export default class ThemeModel {
   init(themes, questions, answers) {
     this.themes = themes;
     this.questions = questions;
-    this. answers = answers;
-    console.log(this.getThemesList());
+    this.answers = answers;
+    this.themesList = [];
+    this.getThemesList();
   }
 
-  getThemesList() { // переделать получше, выглядит ужасно, но работает.....
-    let result = [];
+  getThemesList() { // переделать получше, выглядит ужасно, но работает.....        
     for (let theme of this.themes) {
-      result.push({
+      this.themesList.push({
         id: theme.id,
         title: theme.title,
         questions: Array.from({ length: this.questions.length })
@@ -27,8 +27,6 @@ export default class ThemeModel {
           }))
       });
     }
-
-    return result;
   }
 
   getThemes() {

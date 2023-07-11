@@ -21,10 +21,8 @@ export default class BoardPresenter {
   }
 
   init (themesModel) {
-    // this.articlesModel = articlesModel;
     this.themesModel = themesModel;
-    // this.articles = [...this.articlesModel.getArticles()];
-    this.themes = this.themesModel.getThemesList();
+    this.themes = this.themesModel.themesList;
 
 
     render(this.mainContainer, this.mainWrapper)
@@ -34,24 +32,18 @@ export default class BoardPresenter {
     for (const theme of this.themes) {
       const themeView = new ThemeView(theme, i++);
       render(themeView, this.themesList.getElement());
-      // themeView.setListener(themeView.setTheme(i++));
       themeView.setListener(this.switchTheme(i));
       
     }
 
     render(this.articlesList, this.mainContainer.getElement());
-    // for (const article of this.articles) {
-    //   render(new ArticleView(article), this.articlesList.getElement());
-    // }
-    // this.articlesList.removeArticles();
-    // this.switchTheme(1)();
     this.loadArticle.init();
     this.login.init(this.switchToSignUpPage);
     this.signUp.init(this.switchToLoginPage);
   }
 
 
-  switchToOtherPage = (pageNumber) => { // стрелка важна!
+  switchToOtherPage = (pageNumber) => {
     if (pageNumber == 0) {
       this.mainWrapper.innerHTML = '';
       render(this.mainContainer, this.mainWrapper)

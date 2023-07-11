@@ -17,7 +17,9 @@ const createTemplate = () => (
 
 export default class MenuView {
   init(callback) {
+    this.getElement();
     this.setListeners(callback);
+    this.element.querySelector('.header__search input').addEventListener('keydown', this.onSearch)
   }
 
   getTemplate() {
@@ -48,6 +50,13 @@ export default class MenuView {
     let i = 0;
     for (const menuElement of menuElements) {
       menuElement.addEventListener('click', this.setMenu(i++, callback));
+    }
+  }
+
+  // обработчик события на поиске при копке Enter
+  onSearch(event) {
+    if (event.code == "Enter") {
+
     }
   }
 
