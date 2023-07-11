@@ -23,6 +23,6 @@ const menu = new MenuView();
 render(menu, headerElement.querySelector('.header__container'));
 
 
-menu.init(boardPresenter.switchToOtherPage);
 themeModel.init(themes, questions, answers);
+menu.init(boardPresenter.switchToOtherPage, boardPresenter.setSearchQuestions());
 boardPresenter.init(themeModel);
