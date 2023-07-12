@@ -16,7 +16,9 @@ const createTemplate = (question) => (
     <div class="article__name">
       <p class="aticle__name-text">${question.question}</p>
     </div>
-    ${createAnswersTeamplate(question.answers)}
+    <div class="article__answers">
+      
+    </div>
     <div class="article__date">${question.date_created}</div>
   </li>`
 );
@@ -25,6 +27,9 @@ const createTemplate = (question) => (
 export default class ArticleView {
   constructor(question) {
     this.question = question;
+    this.getElement();
+    this.element.addEventListener('click', this.onArticle());
+    this.isAnswersRender = false;
   }
 
   getTemplate () {
@@ -37,6 +42,24 @@ export default class ArticleView {
     }
 
     return this.element;
+  }
+
+
+  renderAnswers() {
+    this.element.querySelector('.article__answers').innerHTML = createAnswersTeamplate(question.answers);
+    
+  }
+
+  onArticle() {
+    return () => {
+      if (this.isAnswersRender) {
+        this.getElement().querySelector('.article__answers').innerHTML = '';
+      } else {
+        this.getElement().querySelector('.article__answers').innerHTML = createAnswersTeamplate(this.question.answers);
+      }
+
+      this.isAnswersRender = !this.isAnswersRender;
+    }
   }
 
   removeElement() {
