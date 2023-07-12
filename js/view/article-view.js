@@ -44,12 +44,6 @@ export default class ArticleView {
     return this.element;
   }
 
-
-  renderAnswers() {
-    this.element.querySelector('.article__answers').innerHTML = createAnswersTeamplate(question.answers);
-    
-  }
-
   onArticle() {
     return () => {
       if (this.isAnswersRender) {
