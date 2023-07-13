@@ -34,11 +34,11 @@ const createTemplate = () => {
 
 
 export default class SignUpView {
-  init(callback) {
+  init(callback, reloadProfilePage) {
     this.getElement().querySelector('.sign-up__hint-link').addEventListener('click', callback);
   
     // Код Алексея
-    this.element.querySelector('.sign-up__button').addEventListener('click', this.onSignUpButton);
+    this.element.querySelector('.sign-up__button').addEventListener('click', this.onSignUpButton(reloadProfilePage));
   }
 
   getTemplate () {
@@ -54,43 +54,49 @@ export default class SignUpView {
   }
 
   // обработчик кнопки код Алексея
-  onSignUpButton = (event) => {
-    event.preventDefault();
+  onSignUpButton = (reloadProfilePage) => {
+    return (event) => {
+      event.preventDefault();
       
-    // Получаем значения полей ввода
-    var firstName = document.querySelector('.sign-up__first-name-input').value;
-    var lastName = document.querySelector('.sign-up__second-name-input').value;
-    var email = document.querySelector('.sign-up__email-input').value;
-    var password = document.querySelector('.sign-up__password-input').value;
-    var confirmPassword = document.querySelector('.sign-up__password-input_confirmation').value;
-    
-      // Создаем объект с данными для отправки
-    var requestData = {
-      email: email,
-      password: password,
-      is_active: true,
-      is_superuser: false,
-      is_verified: false,
-      name: firstName,
-      surname: lastName
-    };
-    
-    // Создаем объект запроса
-    var request = new XMLHttpRequest();
-    request.open('POST', '/auth/register'); // возможно нужно изменить путь
-    request.setRequestHeader('Content-Type', 'application/json');
-    
-    // Отправляем запрос с данными в формате JSON
-    request.send(JSON.stringify(requestData));
-    
-    // Обработка ответа сервера
-    request.onload = function() {
-      if (request.status === 201) {
-        alert('Успешная регистрация');
-      } else {
-        alert('Ошибка регистрации, попробуйте ещё раз');
-      }
-    };  
+      // Получаем значения полей ввода
+      var firstName = document.querySelector('.sign-up__first-name-input').value;
+      var lastName = document.querySelector('.sign-up__second-name-input').value;
+      var email = document.querySelector('.sign-up__email-input').value;
+      var password = document.querySelector('.sign-up__password-input').value;
+      var confirmPassword = document.querySelector('.sign-up__password-input_confirmation').value;
+      
+        // Создаем объект с данными для отправки
+      var requestData = {
+        email: email,
+        password: password,
+        is_active: true,
+        is_superuser: false,
+        is_verified: false,
+        name: firstName,
+        surname: lastName
+      };
+      
+      // Создаем объект запроса
+      var request = new XMLHttpRequest();
+      request.open('POST', '/auth/register'); // возможно нужно изменить путь
+      request.setRequestHeader('Content-Type', 'application/json');
+      
+      // Отправляем запрос с данными в формате JSON
+      request.send(JSON.stringify(requestData));
+      
+      // Обработка ответа сервера
+      request.onload = function() {
+        if (request.status === 201) {
+          alert('Успешная регистрация');
+          // при успешной реигстрации использует метод switchToOtherPage из board-presenter
+          // тем самым обновляя страницу профиля, должно работать но я не уверен
+          // если не работает то можно просто поставить location.reload() он полностью обновит страницу
+          reloadProfilePage(2);
+        } else {
+          alert('Ошибка регистрации, попробуйте ещё раз');
+        }
+      };  
+    }
   }
 
   removeElement() {

@@ -41,8 +41,8 @@ export default class BoardPresenter {
     render(this.articlesList, this.mainContainer.getElement());
     this.loadArticle.init();
     this.profile.init();
-    this.login.init(this.switchToSignUpPage);
-    this.signUp.init(this.switchToLoginPage);
+    this.login.init(this.switchToSignUpPage, this.switchToOtherPage);
+    this.signUp.init(this.switchToLoginPage, this.switchToOtherPage);
   }
 
 

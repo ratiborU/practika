@@ -23,10 +23,10 @@ const createTemplate = () => (
 
 
 export default class LoginView {
-  init(callback) {
+  init(callback, reloadProfilePage) {
     this.getElement().querySelector('.login__hint-link').addEventListener('click', callback);
     // Код Алексея
-    this.element.querySelector('.login__button').addEventListener('click', this.onLoginButton);
+    this.element.querySelector('.login__button').addEventListener('click', this.onLoginButton(reloadProfilePage));
   }
 
 
@@ -43,30 +43,36 @@ export default class LoginView {
   }
 
   // обработчик на кнопке Код Алексея
-  onLoginButton(event) {
-    event.preventDefault(); 
+  onLoginButton(reloadProfilePage) {
+    return (event) => {
+      event.preventDefault(); 
 
-    var email = document.querySelector('.login__email-input').value;
-    var password = document.querySelector('.login__password-input').value;
-
-    // Создаем объект FormData и добавляем в него значения полей ввода
-    var formData = new FormData();
-    formData.append('username', email);
-    formData.append('password', password);
-
-    // Создаем объект запроса
-    var request = new XMLHttpRequest();
-    request.open('POST', '/auth/jwt/login'); // возможно нужно изменить путь
-    request.send(formData);
-
-    // Обработка ответа сервера (вы можете настроить свою логику обработки здесь)
-    request.onload = function() {
-      if (request.status === 204) {
-        alert("Успешный вход")
-      } else {
-        alert("Неудачный вход, попробуйте ещё раз")
-      }
-    };
+      var email = document.querySelector('.login__email-input').value;
+      var password = document.querySelector('.login__password-input').value;
+  
+      // Создаем объект FormData и добавляем в него значения полей ввода
+      var formData = new FormData();
+      formData.append('username', email);
+      formData.append('password', password);
+  
+      // Создаем объект запроса
+      var request = new XMLHttpRequest();
+      request.open('POST', '/auth/jwt/login'); // возможно нужно изменить путь
+      request.send(formData);
+  
+      // Обработка ответа сервера (вы можете настроить свою логику обработки здесь)
+      request.onload = function() {
+        if (request.status === 204) {
+          alert("Успешный вход");
+          // при успешном входе использует метод switchToOtherPage из board-presenter
+          // тем самым обновляя страницу профиля, должно работать но я не уверен
+          // если не работает то можно просто поставить location.reload() он полностью обновит страницу
+          reloadProfilePage(2); 
+        } else {
+          alert("Неудачный вход, попробуйте ещё раз");
+        }
+      };
+    }
   }
 
   removeElement() {

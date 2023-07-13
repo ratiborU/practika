@@ -65,11 +65,43 @@ export default class ArticleView {
   onLoadButton() {
     return () => {
       const textarea = this.element.querySelector('.article__load-answer-textarea');
-      textarea.value = '';
 
-      // добавить запрос на сервер 
-      // alert можно убрать
-      alert("Ответ отправлен");
+      const text = textarea.value;
+      const question_id = this.question.id;
+
+      const url = "/new_answer";
+      const data = {
+      "question_id": question_id,
+      "answer": text
+    };
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json(); // Получить JSON-объект из ответа
+      } else {
+        throw new Error(response.status + ' ' + response.statusText);
+      }
+    })
+    .then(jsonData => {
+      if ('criteria' in jsonData) {
+        alert('Что-то пошло не так:\n' + jsonData.criteria.join('\n'))
+      } else {
+        textarea.value = '';
+        alert('Успешно создан ответ!');
+        // обновляет страницу полностью после отправки вопроса 
+        location.reload();
+      }
+    })
+    .catch(error => {
+      alert(error);
+    });
     }
   }
 
