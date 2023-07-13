@@ -1,4 +1,5 @@
 import { createElement } from '../render.js';
+import { pageInit } from '../main.js';
 
 const createAnswersTeamplate = (answers) => {
   let result = '';
@@ -96,13 +97,15 @@ export default class ArticleView {
         textarea.value = '';
         alert('Успешно создан ответ!');
         // обновляет страницу полностью после отправки вопроса 
-        location.reload();
+        pageInit();
       }
     })
     .catch(error => {
       alert(error);
     });
+    // pageInit();
     }
+    
   }
 
   removeElement() {

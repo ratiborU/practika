@@ -1,4 +1,5 @@
 import { createElement } from '../render.js';
+import { pageInit } from '../main.js';
 
 
 const createTemplate = () => (
@@ -65,12 +66,13 @@ export default class LoadArticleView {
       } else {
         alert('Успешно создан вопрос!');
         // обновляет страницу полностью после отправки вопроса 
-        location.reload();
+        pageInit();
       }
     })
     .catch(error => {
       alert(error);
     });
+    // pageInit();
   }
 
   removeElement() {
